@@ -12,34 +12,87 @@ The datasets used are listed below to help develop our model. The evaluation met
 
 ### Dataset
 
-There are 3 datasets included in the data folder for this project.
-train.csv: This data contains all of the training data for model. The target variable (SalePrice) is removed from the test set
-test.csv: This data contains the test data for your model. You will feed this data into your regression model to make predictions.
-sample_sub_reg.csv: An example of a correctly formatted submission for this challenge (with a random number provided as predictions for SalePrice. Please ensure that your submission to Kaggle matches this format.
+1) train.csv: This data contains all of the training data for model. The target variable (SalePrice) is removed from the test set
+2) test.csv: This data contains the test data for your model. You will feed this data into your regression model to make predictions.
+3) sample_sub_reg.csv: An example of a correctly formatted submission for this challenge (with a random number provided as predictions for SalePrice) 
 
 
 ### Data Cleaning
 
-1) Checked for missing values
-2) Checked for NaN values
+1) Sorting and Renaming of Columns (Training Set)
+2) Checking and cleaning of Null Value for Training Set
 3) Converted Dtypes
-4) Ammended wrong values/ incorrect data
-5) Dropped unnecessary columns
-6) Renaming columns
-7) Merging dataframes
+4) Checking and cleaning of Null Value for Test Set
+5) Removing of columns for Training Set
+6) Removing of columns for Test Set
 
 ### Data Dictionary
 
 |Feature|Type|Dataset|Description|
 |---|---|---|---|
-|maximum_rainfall_in_a_day|float|rainfall-monthly-highest-daily-total|This dataset shows the maximum rainfall in mm that is record in a single day a particular month for the past 40 years in singapore.|
-|mean_temp|float|surface-air-temperature-monthly-mean|This dataset shows the the monthly mean temperature in degC for the past 40 years in singapore. | 
-|mean_rh|float|relative-humidity-monthly-mean|This dataset shows the average relative humidity recorded in Singapore for the past 40 years| 
-|mean_sunshine_hrs|float|sunshine-duration-monthly-mean-daily-duration|This dataset shows the average hours of Sunshine exposure monthly for the past 40 years| 
-|no_of_rainy_days|Int|rainfall-monthly-number-of-rain-days|This dataset shows the amount of days that rained per month in Singapore for the last 40 years |
-|total_rainfall|float|rainfall-monthly-total|This dataset knows the monthly average of rainfall occur in singapore for the past 40 years| 
-|year|object|df|Year Date of the dataset| 
-|month|object|df|Month Date of the dataset| 
+id|int64||N/A  
+town|object||HDB township where the flat is located, e.g. BUKIT MERAH
+flat_type|object||type of the resale flat unit, e.g. 3 ROOM
+storey_range|object||storey_range
+flat_model |object||HDB model of the resale flat, e.g. Multi Generation
+lease_commence_date |int64||commencement year of the flat unit's 99-year lease
+resale_price|float64||This is the target variable for the modelling
+tranc_year|int64||year of resale transaction
+tranc_month|int64||month of resale transaction
+lower|int64||lower value of storey_range
+upper|int64||upper value of storey_range
+mid|int64||middle value of storey_range
+floor_area_sqft|float64||floor area of the resale flat unit in square feet
+hdb_age|int64||number of years from lease_commence_date to present year
+max_floor_lvl|int64||highest floor of the resale flat
+year_completed|int64||year which construction was completed for resale flat
+multistorey_carpark|object||boolean value if resale flat has a multistorey carpark in the same block
+precinct_pavilion|object||boolean value if resale flat has a pavilion in the same block
+1room_sold|int64||number of 1-room residential units in the resale flat
+2room_sold|int64||number of 2-room residential units in the resale flat              
+3room_sold|int64||number of 3-room residential units in the resale flat
+4room_sold|int64||number of 4-room residential units in the resale flat
+5room_sold|int64||number of 5-room residential units in the resale flat
+exec_sold|int64||number of executive type residential units in the resale flat block               
+multigen_sold|int64||number of multi-generational type residential units in the resale flat block
+studio_apartment_sold|int64||number of studio apartment type residential units in the resale flat block 
+1room_rental|int64||number of 1-room rental residential units in the resale flat block
+2room_rental|int64||number of 2-room rental residential units in the resale flat block    
+3room_rental|int64||number of 3-room rental residential units in the resale flat block
+other_room_rental|int64||number of "other" type rental residential units in the resale flat block 
+latitude|float64||Latitude based on postal code
+longitude|float64||Longitude based on postal code
+mall_nearest_distance|int64||distance (in metres) to the nearest mall
+mall_within_500m|int64||number of mall within 500 metres
+mall_within_1km|int64||number of mall within 1 kilometre
+mall_within_2km|int64||number of mall within 2 kilometres
+hawker_nearest_distance|int64||number of hawker food stalls in the nearest hawker centre
+hawker_within_500m|int64||number of hawker centres within 500 metres
+hawker_within_1km|int64||number of hawker centres within 1 kilometre
+hawker_within_2km|int64||number of hawker centres within 2 kilometres
+hawker_food_stalls|int64||number of hawker food stalls in the nearest hawker centre
+hawker_market_stalls|int64||number of hawker and market stalls in the nearest hawker centre 
+mrt_nearest_distance|int64||distance (in metres) to the nearest MRT station
+mrt_name|object||name of the nearest MRT station
+bus_interchange|int64||boolean value if the nearest MRT station is also a bus interchange
+mrt_interchange|int64||boolean value if the nearest MRT station is a train interchange station
+mrt_latitude|float64||latitude (in decimal degrees) of the the nearest MRT station
+mrt_longitude|float64||longitude (in decimal degrees) of the nearest MRT station
+bus_stop_nearest_distance|int64||distance (in metres) to the nearest bus stop
+bus_stop_latitude|float64||latitude (in decimal degrees) of the the nearest bus stop
+bus_stop_longitude|float64||longitude (in decimal degrees) of the nearest bus stop
+pri_sch_nearest_distance|int64||distance (in metres) to the nearest primary school
+pri_sch_name|object||name of the nearest primary school
+vacancy|int64||number of vacancies in the nearest primary school
+pri_sch_affiliation|int64||boolean value if the nearest primary school has a secondary school affiliation
+pri_sch_latitude|float64||latitude (in decimal degrees) of the the nearest primary school
+pri_sch_longitude|float||longitude (in decimal degrees) of the nearest primary school
+sec_sch_nearest_dist|int64||distance (in metres) to the nearest secondary school
+sec_sch_name|object||name of the nearest secondary school
+cutoff_point|int64||PSLE cutoff point of the nearest secondary school
+affiliation|int64||boolean value if the nearest secondary school has an primary school affiliation
+sec_sch_latitude|float64||latitude (in decimal degrees) of the the nearest secondary school
+sec_sch_longitude|float64||longitude (in decimal degrees) of the nearest secondary school
 
 
 ### Exploratory Data Analysis
