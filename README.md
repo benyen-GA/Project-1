@@ -1,183 +1,122 @@
-#  ![](https://ga-dash.s3.amazonaws.com/production/assets/logo-9f88ae6c9c3871690e33280fcf557f33.png) Project 2 - Singapore Housing Data and Kaggle Challenge
+### Background
 
-Welcome to Project 2! It's time to start modeling.
+The Housing & Development Board (HDB) (Malay: Lembaga Perumahan dan Pembangunan; Chinese: 建屋发展局; Tamil: வீடமைப்பு வளர்ச்சிக் கழகம்) or often referred to as the Housing Board, is a statutory board under the Ministry of National Development responsible for Singapore's public housing. Founded in 1960 as a result of efforts in the late 1950s to set up an authority to take over the Singapore Improvement Trust's (SIT) public housing responsibilities, the HDB focused on the construction of emergency housing and the resettlement of kampong residents into public housing in the first few years of its existence.
+The resale market in Singapore in recent years has known to be more competitive due to the lack of housing and with more citizen being weathier. There are many factors involving the resale prices. By using past sales data and building of a model, we are able to predict the HDB resale prices.
+We will be using a training set provided to train our model before using the test set to test our model. The main feature that we are looking out for is the 'resale prices' feature.
 
-Shoutout to **Ben Lim**, Instructional Associate for DSIF-SG-4 for compiling this project!
+### Problem Statement
 
-**Primary Learning Objectives:**
-1. Creating and iteratively refining a regression model
-2. Using [Kaggle](https://www.kaggle.com/) to practice the modeling process
-3. Providing business insights through reporting and presentation.
+I'm a Business analyst that was commissioned by the Housing Board Authority (HDB) to help analyze and predict the current trend of resale prices from 2012 - 2021.
+As there are many factors involving the prediction of HDB resale prices, this include the flat type, town area, flat model, floor area. It is necessary to develop a model to help predict the resale price based on the mentioned factors.
+The datasets used are listed below to help develop our model. The evaluation metric for the model used will be the Root Mean Square Error (RMSE) which measures the difference between the predicted and actual prices. The lower the RMSE,it indicate better accuracy of the model.
 
-You are tasked with creating a regression model based on Singapore Housing Dataset. This model will predict the price of a house at sale.
+### Dataset
 
-This Dataset is an exceptionally detailed one with over 70 columns of different features relating to houses.
+1) train.csv: This data contains all of the training data for model. The target variable (SalePrice) is removed from the test set
+2) test.csv: This data contains the test data for your model. You will feed this data into your regression model to make predictions.
+3) sample_sub_reg.csv: An example of a correctly formatted submission for this challenge (with a random number provided as predictions for SalePrice) 
 
-Secondly, we are hosting a competition on Kaggle to give you the opportunity to practice the following skills:
 
-- Refining models over time
-- Use of train-test split, cross-validation, and data with unknown values for the target to simulate the modeling process
-- The use of Kaggle as a place to practice data science
+### Data Cleaning
 
-As always, you will be submitting a technical report and a presentation. **You may find that the best model for Kaggle is not the best model to address your data science problem.**
+1) Sorting and Renaming of Columns (Training Set)
+2) Checking and cleaning of Null Value for Training Set
+3) Converted Dtypes
+4) Checking and cleaning of Null Value for Test Set
+5) Removing of columns for Training Set
+6) Removing of columns for Test Set
 
-## Set-up
+### Data Dictionary
 
-Before you begin working on this project, please do the following:
+|Feature|Type|Dataset|Description|
+|---|---|---|---|
+id|int64||N/A  
+town|object||HDB township where the flat is located, e.g. BUKIT MERAH
+flat_type|object||type of the resale flat unit, e.g. 3 ROOM
+storey_range|object||storey_range
+flat_model |object||HDB model of the resale flat, e.g. Multi Generation
+lease_commence_date |int64||commencement year of the flat unit's 99-year lease
+resale_price|float64||This is the target variable for the modelling
+tranc_year|int64||year of resale transaction
+tranc_month|int64||month of resale transaction
+lower|int64||lower value of storey_range
+upper|int64||upper value of storey_range
+mid|int64||middle value of storey_range
+floor_area_sqft|float64||floor area of the resale flat unit in square feet
+hdb_age|int64||number of years from lease_commence_date to present year
+max_floor_lvl|int64||highest floor of the resale flat
+year_completed|int64||year which construction was completed for resale flat
+multistorey_carpark|object||boolean value if resale flat has a multistorey carpark in the same block
+precinct_pavilion|object||boolean value if resale flat has a pavilion in the same block
+1room_sold|int64||number of 1-room residential units in the resale flat
+2room_sold|int64||number of 2-room residential units in the resale flat              
+3room_sold|int64||number of 3-room residential units in the resale flat
+4room_sold|int64||number of 4-room residential units in the resale flat
+5room_sold|int64||number of 5-room residential units in the resale flat
+exec_sold|int64||number of executive type residential units in the resale flat block               
+multigen_sold|int64||number of multi-generational type residential units in the resale flat block
+studio_apartment_sold|int64||number of studio apartment type residential units in the resale flat block 
+1room_rental|int64||number of 1-room rental residential units in the resale flat block
+2room_rental|int64||number of 2-room rental residential units in the resale flat block    
+3room_rental|int64||number of 3-room rental residential units in the resale flat block
+other_room_rental|int64||number of "other" type rental residential units in the resale flat block 
+latitude|float64||Latitude based on postal code
+longitude|float64||Longitude based on postal code
+mall_nearest_distance|int64||distance (in metres) to the nearest mall
+mall_within_500m|int64||number of mall within 500 metres
+mall_within_1km|int64||number of mall within 1 kilometre
+mall_within_2km|int64||number of mall within 2 kilometres
+hawker_nearest_distance|int64||number of hawker food stalls in the nearest hawker centre
+hawker_within_500m|int64||number of hawker centres within 500 metres
+hawker_within_1km|int64||number of hawker centres within 1 kilometre
+hawker_within_2km|int64||number of hawker centres within 2 kilometres
+hawker_food_stalls|int64||number of hawker food stalls in the nearest hawker centre
+hawker_market_stalls|int64||number of hawker and market stalls in the nearest hawker centre 
+mrt_nearest_distance|int64||distance (in metres) to the nearest MRT station
+mrt_name|object||name of the nearest MRT station
+bus_interchange|int64||boolean value if the nearest MRT station is also a bus interchange
+mrt_interchange|int64||boolean value if the nearest MRT station is a train interchange station
+mrt_latitude|float64||latitude (in decimal degrees) of the the nearest MRT station
+mrt_longitude|float64||longitude (in decimal degrees) of the nearest MRT station
+bus_stop_nearest_distance|int64||distance (in metres) to the nearest bus stop
+bus_stop_latitude|float64||latitude (in decimal degrees) of the the nearest bus stop
+bus_stop_longitude|float64||longitude (in decimal degrees) of the nearest bus stop
+pri_sch_nearest_distance|int64||distance (in metres) to the nearest primary school
+pri_sch_name|object||name of the nearest primary school
+vacancy|int64||number of vacancies in the nearest primary school
+pri_sch_affiliation|int64||boolean value if the nearest primary school has a secondary school affiliation
+pri_sch_latitude|float64||latitude (in decimal degrees) of the the nearest primary school
+pri_sch_longitude|float||longitude (in decimal degrees) of the nearest primary school
+sec_sch_nearest_dist|int64||distance (in metres) to the nearest secondary school
+sec_sch_name|object||name of the nearest secondary school
+cutoff_point|int64||PSLE cutoff point of the nearest secondary school
+affiliation|int64||boolean value if the nearest secondary school has an primary school affiliation
+sec_sch_latitude|float64||latitude (in decimal degrees) of the the nearest secondary school
+sec_sch_longitude|float64||longitude (in decimal degrees) of the nearest secondary school
 
-1. Sign up for an account on [Kaggle](https://www.kaggle.com/)
-2. **IMPORTANT**: Click this link ([Regression Challenge Sign Up](https://www.kaggle.com/t/dc36375f24b2489cb84f3f1d76e25b98)) to **join** the competition (otherwise you will not be able to make submissions!)
-3. Review the material and download data files on the [DSI-SG-Project-2 Regression Challenge](https://www.kaggle.com/competitions/dsi-sg-project-2-regression-challenge-hdb-price/overview)
-4. Review the [data description](https://www.kaggle.com/competitions/dsi-sg-project-2-regression-challenge-hdb-price/data).
 
-## The Modeling Process
+### Exploratory Data Analysis
 
-1. The train dataset has all of the columns that you will need to generate and refine your models. The test dataset has all of those columns except for the target that you are trying to predict in your Regression model.
-2. Generate your regression model using the training data. We expect that within this process, you'll be making use of:
-    - train-test split
-    - cross-validation / grid searching for hyperparameters
-    - strong exploratory data analysis to question correlation and relationship across predictive variables
-    - code that reproducibly and consistently applies feature transformation (such as the preprocessing library)
-3. Predict the values for your target column in the test dataset and consider submitting your predictions to Kaggle to see how your model does against unknown data.
-    - **Note**: Kaggle expects to see your submissions in a specific format. Check the challenge's page to make sure you are formatting your CSVs correctly!
-    - **You are limited to models you've learned in class so far**. In other words, you cannot use advanced supervised learning models like XGBoost, Neural Networks.
-4. Evaluate your models!
-    - consider your evaluation metrics
-    - consider your baseline score
-    - how can your model be used for inference?
-    - why do you believe your model will generalize to new data?
+1. Based on the data, we can conclude that central area resale price is considered to be the most expensive as it is in the prime area of Singapore. It is followed by bukit timah where most of the private housing are located.
+2. Based on the reg plot above, there seems not to have much correlationship with resale price except for floor_area_sqft. This is naturally so as real estate prices are based on floor_area.
+3. There is a trend on the increase of resale prices throughout the different towns in singapore. The highest increase is in fact bukit timah. The first reason behind rising property prices in the last two years, is that central banks have reduced interest rates in a bid to stimulate the economy and prevent an economic recession during a drawn-out pandemic.
+4. Based on the number of transaction, there is increase of activities from 2013 to 2020. However, there is a massive dip in 2021. This was due to covid-19 where foreigners usually have rental have all move back to their home countries. Another possible reason was as the world or Singapore have yet to know what is happening in the future, people are holding back on purchasing homes.
+5. Based on the above KDE model, we can assume that there is a high demand of 1-room and 2-room flats.
+6. There seems to have a trend that the resale prices are the highest in the west and northern part of singapore. This was also due to the high price/sqft that may have contribute to higher resale price.
+7. Based on the above scatterplot, I wanted to see if there is any relationship between resale prices and area in the mrt. We can see that there are not many points available, however, we can see that the central area and certain west side, the price are pretty high.
 
-## Submission
+### Recomendation and Conclusion
 
-Materials must be submitted by the date specified by your Instructional Team through your GitHub account repo shared with the Instructional Team.
+###### Conclusion
+The average price prediction is at 68,000 SGD Based on the notes, the best model is usually the model with the lowest RMSE which turns out to be the Ridge model. The features we used was set at 30 features with alpha = 1. As the median is at 48,000 SGD , the difference between both prediction and median is not far which is a good indictor that it is not overfitting.
+Based on the lasso model using K-best feature selection of 30 to predict the price of HDB resale flat units was at 69K SGD with a R2 score of 77%. This is a slightly smaller number as compared to the other 2 models.
+Ridge model trades variance for bias. It is usually better than OLS when there are a large number of variables included because it has a penalty term to reduce overfitting and improve generalization to the testing set. However, based on the kaggle set of my submission at 90K points. It shows a slightly overfitting model which makes makes my model perform poorly. This can be due to certain factors in my modelling which means ther is room for improvement.
+Comparsion between lasso and ridge, there are many factors to decide which model to use as Lasso can set some coefficients to zero, thus performing variable selection, while ridge regression cannot. Lasso tends to do well if there are a small number of significant parameters and the others are close to zero (ergo: when only a few predictors actually influence the response) while Ridge works well if there are many large parameters of about the same value (ergo: when most predictors impact the response) which in this case ridge is a better model.
 
-Your technical report will be hosted on Github Enterprise. Make sure it includes:
+###### Recomendation
 
-- A README.md (that isn't this file)
-- Jupyter notebook(s) with your analysis and models (renamed to describe your project)
-- At least one successful prediction submission on [DSI-SG-Project-2 Regression Challenge](https://www.kaggle.com/competitions/dsi-sg-project-2-regression-challenge-hdb-price) --  you should see your name in the "[Leaderboard](https://www.kaggle.com/competitions/dsi-sg-project-2-regression-challenge-hdb-price/leaderboard)" tab.
-- Data files
-- Presentation slides
-- Any other necessary files (images, etc.)
+As this modelling is only at 1 iteration hence improvement could be made with multiple attempt to improve the model. Also, as there is a chance of overfitting which could be cause by the model complexity is high, so it learns the noise within the training data hence overfitting can be look into. We can also look into polynominal features to help us better train our model. 
 
----
+### Citations
 
-## Presentation Structure
-
-- **Presentation Time: 15 minutes**
-- Use Google Slides or some other visual aid (Keynote, Powerpoint, etc).
-- Consider the audience. Assume you are presenting to a non-technical audience (real estate agents, property owners, etc.).
-- Start with the **data science problem**.
-- Use visuals that are appropriately scaled and interpretable.
-- Talk about your procedure/methodology (high level, **CODE IS ALWAYS INAPPROPRIATE FOR A NON-TECHNICAL AUDIENCE**).
-- Talk about your primary findings.
-- Make sure you provide **clear recommendations** that follow logically from your analyses and narrative and answer your data science problem.
-
-Be sure to rehearse and time your presentation before class.
-
----
-
-## Rubric
-Teaching team will evaluate your project using the following criteria.  You should make sure that you consider and/or follow most if not all of the considerations/recommendations outlined below **while** working through your project.
-
-**Note:** Presentation will be done as a group while codes will be prepared and submitted by each student.
-
-**Scores will be out of 27 points based on the 9 items in the rubric.** <br>
-*3 points per section*<br>
-
-| Score | Interpretation |
-| --- | --- |
-| **0** | *Project fails to meet the minimum requirements for this item.* |
-| **1** | *Project meets the minimum requirements for this item, but falls significantly short of portfolio-ready expectations.* |
-| **2** | *Project exceeds the minimum requirements for this item, but falls short of portfolio-ready expectations.* |
-| **3** | *Project meets or exceeds portfolio-ready expectations; demonstrates a thorough understanding of every outlined consideration.* |
-
-### The Data Science Process
-
-**Problem Statement**
-- Is it clear what the student plans to do?
-- What type of model will be developed?
-- How will success be evaluated?
-- Is the scope of the project appropriate?
-- Is it clear who cares about this or why this is important to investigate?
-- Does the student consider the audience and the primary and secondary stakeholders?
-
-**Data Cleaning and EDA**
-- Are missing values imputed appropriately?
-- Are distributions examined and described?
-- Are outliers identified and addressed?
-- Are appropriate summary statistics provided?
-- Are steps taken during data cleaning and EDA framed appropriately?
-- Does the student address whether or not they are likely to be able to answer their problem statement with the provided data given what they've discovered during EDA?
-
-**Preprocessing and Modeling**
-- Are categorical variables one-hot encoded?
-- Does the student investigate or manufacture features with linear relationships to the target?
-- Have the data been scaled appropriately?
-- Does the student properly split and/or sample the data for validation/training purposes?
-- Does the student utilize feature selection to remove noisy or multi-collinear features?
-- Does the student test and evaluate a variety of models to identify a production algorithm (**AT MINIMUM:** linear regression, lasso, and ridge)?
-- Does the student defend their choice of production model relevant to the data at hand and the problem?
-- Does the student explain how the model works and evaluate its performance successes/downfalls?
-
-**Evaluation and Conceptual Understanding**
-- Does the student accurately identify and explain the baseline score?
-- Does the student select and use metrics relevant to the problem objective?
-- Is more than one metric utilized in order to better assess performance?
-- Does the student interpret the results of their model for purposes of inference?
-- Is domain knowledge demonstrated when interpreting results?
-- Does the student provide appropriate interpretation with regards to descriptive and inferential statistics?
-
-**Conclusion and Recommendations**
-- Does the student provide appropriate context to connect individual steps back to the overall project?
-- Is it clear how the final recommendations were reached?
-- Are the conclusions/recommendations clearly stated?
-- Does the conclusion answer the original problem statement?
-- Does the student address how findings of this research can be applied for the benefit of stakeholders?
-- Are future steps to move the project forward identified?
-
-### Organization and Professionalism
-
-**Project Organization**
-- Are modules imported correctly (using appropriate aliases)?
-- Are data imported/saved using relative paths?
-- Does the README provide a good executive summary of the project?
-- Is markdown formatting used appropriately to structure notebooks?
-- Are there an appropriate amount of comments to support the code?
-- Are files & directories organized correctly?
-- Are there unnecessary files included?
-- Do files and directories have well-structured, appropriate, consistent names?
-
-**Visualizations**
-- Are sufficient visualizations provided?
-- Do plots accurately demonstrate valid relationships?
-- Are plots labeled properly?
-- Are plots interpreted appropriately?
-- Are plots formatted and scaled appropriately for inclusion in a notebook-based technical report?
-
-**Python Syntax and Control Flow**
-- Is care taken to write human readable code?
-- Is the code syntactically correct (no runtime errors)?
-- Does the code generate desired results (logically correct)?
-- Does the code follows general best practices and style guidelines?
-- Are Pandas functions used appropriately?
-- Are `sklearn` methods used appropriately?
-
-**Presentation**
-- Is the problem statement clearly presented?
-- Does a strong narrative run through the presentation building toward a final conclusion?
-- Are the conclusions/recommendations clearly stated?
-- Is the level of technicality appropriate for the intended audience?
-- Is the student substantially over or under time?
-- Does the student appropriately pace their presentation?
-- Does the student deliver their message with clarity and volume?
-- Are appropriate visualizations generated for the intended audience?
-- Are visualizations necessary and useful for supporting conclusions/explaining findings?
-
-In order to pass the project, students must earn a minimum score of 1 for each category.
-- Earning below a 1 in one or more of the above categories would result in a failing project.
-- While a minimum of 1 in each category is the required threshold for graduation, students should aim to earn at least an average of 1.5 across each category. An average score below 1.5, while it may be passing, means students may want to solicit specific feedback in order to significantly improve the project before showcasing it as part of a portfolio or the job search.
-
-### REMEMBER:
-
-This is a learning environment and you are encouraged to try new things, even if they don't work out as well as you planned! While this rubric outlines what we look for in a _good_ project, it is up to you to go above and beyond to create a _great_ project. **Learn from your failures and you'll be prepared to succeed in the workforce**.
+Source 1: https://www.kaggle.com
