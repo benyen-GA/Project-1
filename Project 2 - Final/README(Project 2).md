@@ -97,38 +97,27 @@ sec_sch_longitude|float64||longitude (in decimal degrees) of the nearest seconda
 
 ### Exploratory Data Analysis
 
-1. Based on the data, we can see that the Northeast Monsoon season occurs between Sep to Nov in the space of 10 years difference with the highest rainfall occur Sep and Nov. 
-2. From 2010 to 2020 onwards, the highest rainfall record belongs to the Southwest Moonsoon. 
-3. A adverse event that occured in 2000 where the min amount of rainfall occurred in Sep as compared to the rest of the other years period. This could be due to climate change where it was reported in 2020, the temperature was the highest as compared to the other years. 
-4. The record dry spell that occurred in 2014 over Singapore–Malaysia was caused by the southward contraction of the intertropical convergence zone. This means that there were a lack of wind activities which indirectly help to move thunderstorm clouds. 
-5. The wettest season in the data of 40 years was known in 2006. This was due to increase acitvities of the sumatra qualls.
-6. As in 1990, it was recordest the highest month to be the wettest which significent contribute to to the the highest amount of rainfall. The only differnce is that in 2010, the month of Nov shows that that it had the highest number of days rained.
-7.  the highest amount of rainfall record was in July 2010. Hence, We can assumed that in that month, there were days that the it rained longer than usual although the days rained are lesser. More in-depth investigation should be done to verified this assumption.
-
+1. Based on the data, we can conclude that central area resale price is considered to be the most expensive as it is in the prime area of Singapore. It is followed by bukit timah where most of the private housing are located.
+2. Based on the reg plot above, there seems not to have much correlationship with resale price except for floor_area_sqft. This is naturally so as real estate prices are based on floor_area.
+3. There is a trend on the increase of resale prices throughout the different towns in singapore. The highest increase is in fact bukit timah. The first reason behind rising property prices in the last two years, is that central banks have reduced interest rates in a bid to stimulate the economy and prevent an economic recession during a drawn-out pandemic.
+4. Based on the number of transaction, there is increase of activities from 2013 to 2020. However, there is a massive dip in 2021. This was due to covid-19 where foreigners usually have rental have all move back to their home countries. Another possible reason was as the world or Singapore have yet to know what is happening in the future, people are holding back on purchasing homes.
+5. Based on the above KDE model, we can assume that there is a high demand of 1-room and 2-room flats.
+6. There seems to have a trend that the resale prices are the highest in the west and northern part of singapore. This was also due to the high price/sqft that may have contribute to higher resale price.
+7. Based on the above scatterplot, I wanted to see if there is any relationship between resale prices and area in the mrt. We can see that there are not many points available, however, we can see that the central area and certain west side, the price are pretty high.
 
 ### Recomendation and Conclusion
 
 ###### Conclusion
-Rainfall contribute directly to the temperature which can impact food delivery orders and types of food delivery.
-
-Temperature plays a major role in the types of food that people ordered. For example, people in hot and humid conditions will like to eat cold food to regulate their body temperature. They also tends to avoid savory food. However, in cold and wet conditions, people tends to eat warm food like soups and spicy dishes to bring up their temperature and to stay warm. 
-
-it was also found that poor air quality will increase takeaway orders as people will avoid going out on poor air quality conditions which increase online shopping or takweaways. 
-
-Overall, there have been talks of climate change and global warming. From the data analysis, the data showed that there were any increase of tempeature of a period of 40 years. This data is extremely important as it helps to tells us the challenges and difficult that climate change might do to us. For example, with the change of climate and uncommon rainfall or drought, normal harvest of crops are delayed which will affect the supply chain network which might cause higher spending.
+The average price prediction is at 68,000 SGD Based on the notes, the best model is usually the model with the lowest RMSE which turns out to be the Ridge model. The features we used was set at 30 features with alpha = 1. As the median is at 48,000 SGD , the difference between both prediction and median is not far which is a good indictor that it is not overfitting.
+Based on the lasso model using K-best feature selection of 30 to predict the price of HDB resale flat units was at 69K SGD with a R2 score of 77%. This is a slightly smaller number as compared to the other 2 models.
+Ridge model trades variance for bias. It is usually better than OLS when there are a large number of variables included because it has a penalty term to reduce overfitting and improve generalization to the testing set. However, based on the kaggle set of my submission at 90K points. It shows a slightly overfitting model which makes makes my model perform poorly. This can be due to certain factors in my modelling which means ther is room for improvement.
+Comparsion between lasso and ridge, there are many factors to decide which model to use as Lasso can set some coefficients to zero, thus performing variable selection, while ridge regression cannot. Lasso tends to do well if there are a small number of significant parameters and the others are close to zero (ergo: when only a few predictors actually influence the response) while Ridge works well if there are many large parameters of about the same value (ergo: when most predictors impact the response) which in this case ridge is a better model.
 
 ###### Recomendation
 
-Due to the wet weather season from October to January, it is recommended that delivery platform to add in additional drivers to meet the demand. This will help to increase sales and business and at the same time lower the demand price of a particular service. This is specially important because the period of thre monsoon season falls during the festive period which people will come out to do more spending. 
-
-With the data showing that the wet season are mainly from October – January. This correspond with the spending season such as Christmas and New year hence some program incentive should be implemented.
-
-As relationships between weather and takeaway food are different on different days of the week and different seasons of the year. it is recommended that the research findings could help the delivery food platform and settled businesses to find out consumer preferences on takeaway food in different weather conditions, formulate corresponding promotion programs and better to meet consumer demand.
+As this modelling is only at 1 iteration hence improvement could be made with multiple attempt to improve the model. Also, as there is a chance of overfitting which could be cause by the model complexity is high, so it learns the noise within the training data hence overfitting can be look into. We can also look into polynominal features to help us better train our model. 
 
 ### Citations
 
-Source 1: https://www.data.gov,sg
+Source 1: https://www.kaggle.com
 
-Source 2: https://www.researchgate.net/publication/349514304_Effect_of_weather_on_online_food_ordering
-
-Source 3: https://www.grab.com.sg
