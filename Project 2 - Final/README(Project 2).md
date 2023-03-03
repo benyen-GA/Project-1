@@ -1,16 +1,21 @@
+### Background
+
+The Housing & Development Board (HDB) (Malay: Lembaga Perumahan dan Pembangunan; Chinese: 建屋发展局; Tamil: வீடமைப்பு வளர்ச்சிக் கழகம்) or often referred to as the Housing Board, is a statutory board under the Ministry of National Development responsible for Singapore's public housing. Founded in 1960 as a result of efforts in the late 1950s to set up an authority to take over the Singapore Improvement Trust's (SIT) public housing responsibilities, the HDB focused on the construction of emergency housing and the resettlement of kampong residents into public housing in the first few years of its existence.
+The resale market in Singapore in recent years has known to be more competitive due to the lack of housing and with more citizen being weathier. There are many factors involving the resale prices. By using past sales data and building of a model, we are able to predict the HDB resale prices.
+We will be using a training set provided to train our model before using the test set to test our model. The main feature that we are looking out for is the 'resale prices' feature.
+
 ### Problem Statement
 
-Every year, delivery operations and customer demand are heavily impacted by rainy weather conditions. This can be circumvented if the company can plan for such conditions beforehand. This project aims to analyse the monthly weather patterns over the year to allow the operations team to better plan and allocate resources during the rainy seasons.
+I'm a Business analyst that was commissioned by the Housing Board Authority (HDB) to help analyze and predict the current trend of resale prices from 2012 - 2021.
+As there are many factors involving the prediction of HDB resale prices, this include the flat type, town area, flat model, floor area. It is necessary to develop a model to help predict the resale price based on the mentioned factors.
+The datasets used are listed below to help develop our model. The evaluation metric for the model used will be the Root Mean Square Error (RMSE) which measures the difference between the predicted and actual prices. The lower the RMSE,it indicate better accuracy of the model.
 
-### Outside Research
+### Dataset
 
-1) Several studies explored the relationship between temperature and human emotions.
-
-2) Research has confirmed that poor air quality will increase takeaway orders. And people will buy drugs, masks, air purifiers to reduce the negative impact on health  People may avoid going out on poor air quality conditions, which leads to an increase in online shopping.
-
-3) On rainy days, consumers will feel uncomfortable while leaving homes to go to the store, which is a profitable opportunity for the takeaway platform.
-
-4) Research shows how does the weather influence the types and frequency on online food ordering
+There are 3 datasets included in the data folder for this project.
+train.csv: This data contains all of the training data for model. The target variable (SalePrice) is removed from the test set
+test.csv: This data contains the test data for your model. You will feed this data into your regression model to make predictions.
+sample_sub_reg.csv: An example of a correctly formatted submission for this challenge (with a random number provided as predictions for SalePrice. Please ensure that your submission to Kaggle matches this format.
 
 
 ### Data Cleaning
