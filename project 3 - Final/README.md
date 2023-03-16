@@ -1,76 +1,82 @@
+### About the project
+This project is about applying the concept on webscraping, APIs and Natural Language Processing (LNP).
+We will be scraping data from Reddit by using Pushshift API, afterwhich applying NLP to model to classify a random post it comes from.
+
 ### Problem Statement
 
-Every year, delivery operations and customer demand are heavily impacted by rainy weather conditions. This can be circumvented if the company can plan for such conditions beforehand. This project aims to analyse the monthly weather patterns over the year to allow the operations team to better plan and allocate resources during the rainy seasons.
+Stocks and real estate investing are both popular investment options for people to grow their their wealth over time.
+Stocks: When people invest in stocks, they're buying a small piece of ownership in a publicly traded company. The goal is to buy stocks at a low price and sell them at a higher price later on, making a profit. However, stocks can be volatile and unpredictable, with prices fluctuating based on factors like company performance, market conditions, and global events.
 
-### Outside Research
+Real estate investing: This involves buying and managing properties with the goal of earning a profit through rental income, property appreciation, or both. Real estate can be a great long-term investment, but it also requires a significant upfront investment, ongoing maintenance costs, and a knowledge of the local real estate market.
 
-1) Several studies explored the relationship between temperature and human emotions.
+As a data analyst for Kabble Securities, I was tasked to develop a machine learning model that can identify key words related to stocks and real estate investing based on user inputs. The challenge is to accurately predict which investments are likely to perform well in the future based on the discussions and patterns observed. The ultimate goal is to provide the company's clients with data-driven insights that will help them make informed investment decisions. The success of this project will depend on the ability of the machine learning model to accurately identify important signals from the noise of online discussions, and the validity of the underlying assumptions used in the model.
 
-2) Research has confirmed that poor air quality will increase takeaway orders. And people will buy drugs, masks, air purifiers to reduce the negative impact on health  People may avoid going out on poor air quality conditions, which leads to an increase in online shopping.
+### Pushshift API
 
-3) On rainy days, consumers will feel uncomfortable while leaving homes to go to the store, which is a profitable opportunity for the takeaway platform.
-
-4) Research shows how does the weather influence the types and frequency on online food ordering
+The scraping data will from `real estate investing` and `stocks` subreddit.
 
 
-### Data Cleaning
+### Part I
+Part 1 of Project shows the method for scraping data from Reddit and doing some data cleaning before exporting the dataset to csv file. 
 
-1) Checked for missing values
-2) Checked for NaN values
-3) Converted Dtypes
-4) Ammended wrong values/ incorrect data
-5) Dropped unnecessary columns
-6) Renaming columns
-7) Merging dataframes
 
 ### Data Dictionary
 
 |Feature|Type|Dataset|Description|
 |---|---|---|---|
-|maximum_rainfall_in_a_day|float|rainfall-monthly-highest-daily-total|This dataset shows the maximum rainfall in mm that is record in a single day a particular month for the past 40 years in singapore.|
-|mean_temp|float|surface-air-temperature-monthly-mean|This dataset shows the the monthly mean temperature in degC for the past 40 years in singapore. | 
-|mean_rh|float|relative-humidity-monthly-mean|This dataset shows the average relative humidity recorded in Singapore for the past 40 years| 
-|mean_sunshine_hrs|float|sunshine-duration-monthly-mean-daily-duration|This dataset shows the average hours of Sunshine exposure monthly for the past 40 years| 
-|no_of_rainy_days|Int|rainfall-monthly-number-of-rain-days|This dataset shows the amount of days that rained per month in Singapore for the last 40 years |
-|total_rainfall|float|rainfall-monthly-total|This dataset knows the monthly average of rainfall occur in singapore for the past 40 years| 
-|year|object|df|Year Date of the dataset| 
-|month|object|df|Month Date of the dataset| 
+|subreddit|Int||Subreddit Post which included `stocks` and `real estate investing`|
+
+### Accuracy and Precision 
+The goal of the project is to be able to train and test a model for accuracy and precision over efficient as we would want the model to accurate pick up key words to help us classify which post does it belong to. For the model to be considered successful, the criteria for accuracy and precision will need to be target of 90% and above for the test score. 
+
 
 
 ### Exploratory Data Analysis
+1. Histogram for Post length for Real estate investing and Stocks  has a negative (left) skew which signify that I have a higher frequency of longer posts than shorter ones. In the context of real estate investing, it can be an indication that users are providing detailed and in-depth information for the topic which helps when training of models. 
+2. The top word that shows up in the Real estate investing post is 'property'
+3. The top word that shows up in the Stock post is 'company'
 
-1. Based on the data, we can see that the Northeast Monsoon season occurs between Sep to Nov in the space of 10 years difference with the highest rainfall occur Sep and Nov. 
-2. From 2010 to 2020 onwards, the highest rainfall record belongs to the Southwest Moonsoon. 
-3. A adverse event that occured in 2000 where the min amount of rainfall occurred in Sep as compared to the rest of the other years period. This could be due to climate change where it was reported in 2020, the temperature was the highest as compared to the other years. 
-4. The record dry spell that occurred in 2014 over Singapore–Malaysia was caused by the southward contraction of the intertropical convergence zone. This means that there were a lack of wind activities which indirectly help to move thunderstorm clouds. 
-5. The wettest season in the data of 40 years was known in 2006. This was due to increase acitvities of the sumatra qualls.
-6. As in 1990, it was recordest the highest month to be the wettest which significent contribute to to the the highest amount of rainfall. The only differnce is that in 2010, the month of Nov shows that that it had the highest number of days rained.
-7.  the highest amount of rainfall record was in July 2010. Hence, We can assumed that in that month, there were days that the it rained longer than usual although the days rained are lesser. More in-depth investigation should be done to verified this assumption.
+### Final Result 
+
+|Model|Method|Train Score|Test Score|Precision(Stocks)|Precision(Real Estate)
+|---|---|---|---|---|---|
+|Logistic Regression|BOW|0.999|0.9622|0.96|0.96|
+|Multinominal Naive Bayes|BOW|0.9755|0.9464|0.97|0.93|
+|Bernoulli Naive Bayes|BOW|0.9415|0.8946|0.97|0.83|
+|Random Forest|BOW|0.9999|0.9651|0.95|0.98|
+|<b>Logistic Regression|<b>TF-IDF|<b>0.9989|<b>0.9662|<b>0.96|<b>0.98|
+|Multinominal Naive Bayes|TF-IDF|0.9836|0.9645|0.97|0.96|
+|Bernoulli Naive Bayes|TF-IDF|0.9852|0.9566|0.96|0.96|
+|Random Forest|TF-IDF|0.9999|0.9594|0.94|0.98|
+|Logistic Regression|n-gram(2,2)|0.9997|0.9211|0.90|0.95|
+|Multinominal Naive Bayes|n-gram(2,2)|0.9997|0.9278|0.94|0.91|
+|Bernoulli Naive Bayes|n-gram(2,2)|0.9927|0.9228|0.93|0.91|
+
+Logistic Regression (TF-IDF) show the best accuracy at 0.9662 out of all the models
 
 
-### Recomendation and Conclusion
+### Conclusion, Limitation and Recommendation
 
-###### Conclusion
-Rainfall contribute directly to the temperature which can impact food delivery orders and types of food delivery.
+#### Conclusion
 
-Temperature plays a major role in the types of food that people ordered. For example, people in hot and humid conditions will like to eat cold food to regulate their body temperature. They also tends to avoid savory food. However, in cold and wet conditions, people tends to eat warm food like soups and spicy dishes to bring up their temperature and to stay warm. 
+Overall, we have built and tested multiple classifier that meets the expectiong of Accuracy and Precision with most of the models achiving more than 90%. The best model is the logistic Regression TF-IDF. One of the reason is the TF-IDF is a popular feature that is known for its ability to capture the importance of words in a document. Another reason is that for our problem statement, we were only using 2 scraped posts which logistic regression works well with binary classification.
 
-it was also found that poor air quality will increase takeaway orders as people will avoid going out on poor air quality conditions which increase online shopping or takweaways. 
+However, although random forest classifier is considered to be one of the better classifiers, we can see based on our data that it didn't perform well as compared to logistic regression. One of the few reason could be there is small dataset where logistic regression may be a better choice than random forest. Random forest can be prone to overfitting when trained on small datasets, while logistic regression tends to be more stable and reliable in this scenario.
 
-Overall, there have been talks of climate change and global warming. From the data analysis, the data showed that there were any increase of tempeature of a period of 40 years. This data is extremely important as it helps to tells us the challenges and difficult that climate change might do to us. For example, with the change of climate and uncommon rainfall or drought, normal harvest of crops are delayed which will affect the supply chain network which might cause higher spending.
+Also logistic regression is generally more interpretable than random forest, as it provides coefficients that show how each feature is associated with the target variable. If interpretability is important for your problem, logistic regression may be a better choice.
+Beside the modeling, i realised that there are some main key words that helps to distingush the post. Words like property and rental for real estate and loan, shares or company trading help to distingush.
+These words actually helps to improve the machine algothims and to better serve our push for data driven investments insights.
 
-###### Recomendation
 
-Due to the wet weather season from October to January, it is recommended that delivery platform to add in additional drivers to meet the demand. This will help to increase sales and business and at the same time lower the demand price of a particular service. This is specially important because the period of thre monsoon season falls during the festive period which people will come out to do more spending. 
+#### Limitation
 
-With the data showing that the wet season are mainly from October – January. This correspond with the spending season such as Christmas and New year hence some program incentive should be implemented.
+There are many limitation to this scope of project. One of them is the collection of datas. As the data comes from a social media posts, people tends to not write in proper or complete english or words. This actually will impact the quality of training of our models.
 
-As relationships between weather and takeaway food are different on different days of the week and different seasons of the year. it is recommended that the research findings could help the delivery food platform and settled businesses to find out consumer preferences on takeaway food in different weather conditions, formulate corresponding promotion programs and better to meet consumer demand.
+#### Recommendation
 
-### Citations
+Recommendation includes feature engineering: The features used in a classifier can have a significant impact on its performance. Feature engineering involves selecting or transforming features to improve the quality of the input data. This could involve scaling, normalization, or dimensionality reduction techniques, depending on the nature of the data.
 
-Source 1: https://www.data.gov,sg
+Hyperparameter tuning: Many classifiers have hyperparameters that can be tuned to improve their performance. Hyperparameters control the behavior of the algorithm, and tweaking them can often lead to better results. Hyperparameter tuning can be performed using techniques such as grid search, random search, or Bayesian optimization.
 
-Source 2: https://www.researchgate.net/publication/349514304_Effect_of_weather_on_online_food_ordering
+Ensemble methods: Ensemble methods involve combining the predictions of multiple classifiers to improve overall performance. Techniques such as bagging, boosting, and stacking can be used to create powerful ensemble models that can often outperform individual classifiers.
 
-Source 3: https://www.grab.com.sg
